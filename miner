@@ -1,0 +1,46 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Увеличение скорости
+local function increaseMiningSpeed()
+    -- Ваш код для увеличения скорости добычи
+    -- Например, можно изменить значение переменной скорости
+end
+
+-- Привязка функции к событию
+game.Players.LocalPlayer:GetMouse().Button1Down:Connect(increaseMiningSpeed)
+local function autoOpenEggs()
+    -- Ваш код для автоматического открытия яиц
+end
+
+-- Привязка функции к событию
+while true do
+    wait(1) -- Задержка между открытиями
+    autoOpenEggs()
+end
+local function autoSellOre()
+    -- Ваш код для автоматической продажи руды
+end
+
+-- Привязка функции к событию
+while true do
+    wait(5) -- Задержка между продажами
+    autoSellOre()
+end
+local player = game.Players.LocalPlayer
+
+local function teleportToCursor()
+    local mouse = player:GetMouse()
+    if mouse then
+        local targetPosition = mouse.Hit.p
+        player.Character:MoveTo(targetPosition)
+    end
+end
+
+-- Привязка функции к сочетанию клавиш Ctrl + Click
+local userInputService = game:GetService("UserInputService")
+userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 and userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
+        teleportToCursor()
+    end
+end)
