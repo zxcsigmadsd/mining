@@ -1,43 +1,77 @@
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
+-- Создание GUI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local MineSpeedButton = Instance.new("TextButton")
+local AutoOpenButton = Instance.new("TextButton")
+local AutoSellButton = Instance.new("TextButton")
+local TeleportButton = Instance.new("TextButton")
 
--- Увеличение скорости
+-- Настройка GUI
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -100)
+Frame.Size = UDim2.new(0, 200, 0, 200)
+
+-- Кнопка увеличения скорости добычи
+MineSpeedButton.Parent = Frame
+MineSpeedButton.Size = UDim2.new(1, 0, 0, 50)
+MineSpeedButton.Text = "Увеличить скорость добычи"
+MineSpeedButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Кнопка автооткрытия яиц
+AutoOpenButton.Parent = Frame
+AutoOpenButton.Position = UDim2.new(0, 0, 0, 60)
+AutoOpenButton.Size = UDim2.new(1, 0, 0, 50)
+AutoOpenButton.Text = "Автооткрытие яиц"
+AutoOpenButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Кнопка автопродажи руды
+AutoSellButton.Parent = Frame
+AutoSellButton.Position = UDim2.new(0, 0, 0, 120)
+AutoSellButton.Size = UDim2.new(1, 0, 0, 50)
+AutoSellButton.Text = "Автопродажа руды"
+AutoSellButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Кнопка телепортации
+TeleportButton.Parent = Frame
+TeleportButton.Position = UDim2.new(0, 0, 0, 180)
+TeleportButton.Size = UDim2.new(1, 0, 0, 50)
+TeleportButton.Text = "Телепорт на курсор"
+TeleportButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+
+-- Функция увеличения скорости добычи
 local function increaseMiningSpeed()
     -- Ваш код для увеличения скорости добычи
-    -- Например, можно изменить значение переменной скорости
+    print("Скорость добычи увеличена!")
 end
 
--- Привязка функции к событию
-game.Players.LocalPlayer:GetMouse().Button1Down:Connect(increaseMiningSpeed)
+-- Функция автооткрытия яиц
 local function autoOpenEggs()
     -- Ваш код для автоматического открытия яиц
+    print("Яйца открываются автоматически!")
 end
 
--- Привязка функции к событию
-while true do
-    wait(1) -- Задержка между открытиями
-    autoOpenEggs()
-end
+-- Функция автопродажи руды
 local function autoSellOre()
     -- Ваш код для автоматической продажи руды
+    print("Руда продается автоматически!")
 end
 
--- Привязка функции к событию
-while true do
-    wait(5) -- Задержка между продажами
-    autoSellOre()
-end
-local player = game.Players.LocalPlayer
-
+-- Функция телепортации
 local function teleportToCursor()
+    local player = game.Players.LocalPlayer
     local mouse = player:GetMouse()
-    if mouse then
-        local targetPosition = mouse.Hit.p
-        player.Character:MoveTo(targetPosition)
-    end
+    local targetPosition = mouse.Hit.p
+    player.Character:MoveTo(targetPosition)
 end
 
--- Привязка функции к сочетанию клавиш Ctrl + Click
+-- Привязка функций к кнопкам
+MineSpeedButton.MouseButton1Click:Connect(increaseMiningSpeed)
+AutoOpenButton.MouseButton1Click:Connect(autoOpenEggs)
+AutoSellButton.MouseButton1Click:Connect(autoSellOre)
+
+-- Привязка телепортации к сочетанию клавиш Ctrl + Click
 local userInputService = game:GetService("UserInputService")
 userInputService.InputBegan:Connect(function(input, gameProcessedEvent)
     if input.UserInputType == Enum.UserInputType.MouseButton1 and userInputService:IsKeyDown(Enum.KeyCode.LeftControl) then
